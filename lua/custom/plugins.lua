@@ -6,7 +6,7 @@ local function detect_venv()
   elseif vim.fn.filereadable(cwd .. "/.venv/bin/python") == 1 then
     return cwd .. "/.venv/bin/python"
   else
-    return "python"
+    return "/home/user/.pyenv/shims/python"
   end
 end
 
@@ -107,6 +107,13 @@ local plugins = {
 			dap.listeners.before.event_exited.dapui_config = function()
 				dapui.close()
 			end
+      
+      -- Загружаем конфигурацию из JSON-файла
+      local launch_config = vim.fn.json_decode(vim.fn.readfile(".vscode/launch.json"))
+
+      -- Настраиваем dap для использования конфигурации из JSON-файла
+      dap.configurations.python = launch_config.configurations
+
 
 			-- Key mappings for debugging
 			vim.keymap.set("n", "<Leader>dt", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
