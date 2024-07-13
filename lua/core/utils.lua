@@ -118,7 +118,7 @@ end
 
 M.get_python_path = function()
   local cwd = vim.fn.getcwd()
-  local venv_python = cwd .. "/.venv/bin/python"
+  local venv_python = "/home/user/.pyenv/shims/python"
   if vim.fn.executable(venv_python) == 1 then
     return venv_python
   else
